@@ -1,51 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
-               xmlns:mx="library://ns.adobe.com/flex/mx">
+               xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:jp="bms.jacketpro.*">
 	
-	<fx:Declarations>
-		<s:RadioButtonGroup id="colourgrp" itemClick="handleColour(event);"/>
-		<s:RadioButtonGroup id="materialgrp" itemClick="handleMaterial(event);"/>
-	</fx:Declarations>
+	
 	
 	<fx:Script>
 		<![CDATA[
 		
-		import mx.events.ItemClickEvent;
+		private var selectedPart:String;
+		private var selectedColour:String;
+		private var selectedMaterial:String;
 		
-		private function handleColour(event:ItemClickEvent):void {
-                //Print the value of the selected RadioButton in the Text Area
-                var colourValue:Object = colourgrp.selectedValue;
-                colourTA.text="You selected " + colourValue;
+		private function addSelectionPanelCallbacks():void
+		{
+			setDefaultValues();
+			selectionPanel.updateColour = updateColour;
+			selectionPanel.updateMaterial = updateMaterial;
+			selectionPanel.updatePart = updatePart;
 		}
+		
+		public function updatePart(part:String):void
+		{
+			trace("updated Part to : " + part);
+			selectedPart = part;
+		}
+		
+		public function updateColour(colour:String):void
+		{
+			trace("updated colour to " + colour);
+			selectedColour = colour;
+			updateImages();
+		}
+		
+		public function updateMaterial(material:String):void
+		{
+			trace("updated material to " + material);
+			selectedMaterial = material;
+			updateImages();
+		}
+		
+		private function setDefaultValues():void
+		{
+			selectedColour = "brown";
+			selectedMaterial = "suede";
+			selectedPart = "body";
+			collarimg.source = "assets/women/collar/" + pathSuffix();
+			bodyimg.source = "assets/women/body/" + pathSuffix();
+			sleevesimg.source = "assets/women/sleeves/" + pathSuffix();
+		}
+		
+		private function updateImages():void
+		{
+			trace("updating images");
+			if (selectedPart == "collar")
+				collarimg.source = "assets/women/collar/" + pathSuffix();
+			else if (selectedPart == "body")
+				bodyimg.source = "assets/women/body/" + pathSuffix();
+			else if (selectedPart == "sleeves")
+				sleevesimg.source = "assets/women/sleeves/" + pathSuffix();
 				
-		private function handleMaterial(event:ItemClickEvent):void {
-                //Print the value of the selected RadioButton in the Text Area
-                var materialValue:Object = materialgrp.selectedValue;
-                materialTA.text="You selected " + materialValue;
+			trace("C: " + collarimg.source);
+			trace("B: " + bodyimg.source);
+			trace("S: " + sleevesimg.source);
 		}
+		
+		private function pathSuffix():String
+		{
+			return selectedMaterial + "/" + selectedColour + ".png";
+		}
+		
 		]]>
 	</fx:Script>
-	<s:HGroup horizontalAlign="center" height="400" width="600">
-		<mx:Accordion id="accordian1" height="150" width="200">
-			<s:NavigatorContent label="Choose Colour" width="200" height="200">
-				<s:VGroup>
-					<s:RadioButton group="{colourgrp}" id="red" label="Red" width="150"/>
-					<s:RadioButton group="{colourgrp}" id="blue" label="Blue" width="150"/>
-					<s:RadioButton group="{colourgrp}" id="green" label="Green" width="150"/>
-				</s:VGroup>
-			</s:NavigatorContent>
-			<s:NavigatorContent label="Choose Material" width="200" height="200">
-				<s:VGroup>
-					<s:RadioButton group="{materialgrp}" id="fauxleather" label="Faux Leather" width="150"/>
-					<s:RadioButton group="{materialgrp}" id="fauxsuede" label="Faux Suede" width="150"/>
-					<s:RadioButton group="{materialgrp}" id="realleather" label="Real Leather" width="150"/>
-				</s:VGroup>
-			</s:NavigatorContent>
-		</mx:Accordion>
-		<s:VGroup verticalAlign="middle">
-			<s:TextArea id="colourTA" height="50" width="100" />
-			<s:TextArea id="materialTA" height="50" width="100" />
-		</s:VGroup>
+	
+	<s:HGroup horizontalAlign="center" x="20" y="20" height="400" width="700">
+		<jp:SelectionPanel id="selectionPanel" height="150" width="200" 
+			creationComplete="addSelectionPanelCallbacks()" />
+		<mx:Container width="250" height="220">
+			<s:Image id="collarimg" width="250" height="220"/>
+			<s:Image id="bodyimg" width="250" height="220"/>
+			<s:Image id="sleevesimg" width="250" height="220"/>
+		</mx:Container>
 	</s:HGroup>
 </s:Application>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<mx:Accordion xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx">
+				
+				<fx:Script>
+		<![CDATA[
+		
+		import mx.events.ItemClickEvent;
+		import bms.jacketpro.*;
+		
+		public var updatePart:Function;
+		public var updateColour:Function;
+		public var updateMaterial:Function;
+		
+		private function handlePart(event:ItemClickEvent):void {
+                var partValue:Object = partgrp.selection.id;
+				trace("partValue is " + partValue);
+                if (updatePart != null) updatePart(partValue);
+		}
+		
+		private function handleColour(event:ItemClickEvent):void {
+                var colourValue:Object = colourgrp.selection.id;
+                if (updateColour != null) updateColour(colourValue);
+		}
+				
+		private function handleMaterial(event:ItemClickEvent):void {
+                var materialValue:Object = materialgrp.selection.id;
+                if (updateMaterial != null) updateMaterial(materialValue);
+		}
+		]]>
+	</fx:Script>
+				
+	<fx:Declarations>
+		<s:RadioButtonGroup id="partgrp" itemClick="handlePart(event);"/>
+		<s:RadioButtonGroup id="colourgrp" itemClick="handleColour(event);"/>
+		<s:RadioButtonGroup id="materialgrp" itemClick="handleMaterial(event);"/>
+	</fx:Declarations>
+				
+	<s:NavigatorContent label="Choose Part" width="200" height="200">
+		<s:VGroup>
+			<s:RadioButton group="{partgrp}" id="body" label="Body" width="150"/>
+			<s:RadioButton group="{partgrp}" id="collar" label="Collar" width="150"/>
+			<s:RadioButton group="{partgrp}" id="sleeves" label="Sleeves" width="150"/>
+		</s:VGroup>			
+	</s:NavigatorContent>
+	<s:NavigatorContent label="Choose Colour" width="200" height="200">
+		<s:VGroup>
+			<s:RadioButton group="{colourgrp}" id="brown" label="brown" width="150"/>
+			<s:RadioButton group="{colourgrp}" id="blue" label="Blue" width="150"/>
+			<s:RadioButton group="{colourgrp}" id="green" label="Green" width="150"/>
+		</s:VGroup>
+	</s:NavigatorContent>
+	<s:NavigatorContent label="Choose Material" width="200" height="200">
+		<s:VGroup>
+			<s:RadioButton group="{materialgrp}" id="suede" label="Faux Suede" width="150"/>
+			<s:RadioButton group="{materialgrp}" id="leather" label="Real Leather" width="150"/>
+		</s:VGroup>			
+	</s:NavigatorContent>
+	
+</mx:Accordion>
