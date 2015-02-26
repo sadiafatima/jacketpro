@@ -2,49 +2,41 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:mx="library://ns.adobe.com/flex/mx" 
-			   xmlns:jp="bms.jacketpro.*">
-	
-	
+			   xmlns:jp="bms.jacketpro.*"
+			   applicationComplete="addSelectionPanelCallbacks()">
 	
 	<fx:Script>
 		<![CDATA[
+		import bms.jacketpro.event.SelectionChangeEvent
+		import flash.events.Event;
+		import spark.components.NavigatorContent;
 		
 		private var selectedPart:String;
 		private var selectedColour:String;
-		private var selectedMaterial:String;
 		
 		private function addSelectionPanelCallbacks():void
 		{
 			setDefaultValues();
-			selectionPanel.updateColour = updateColour;
-			selectionPanel.updateMaterial = updateMaterial;
-			selectionPanel.updatePart = updatePart;
+			selectionPanel.addEventListener(SelectionChangeEvent.COLOUR_CHANGE, updateColour);
 		}
 		
-		public function updatePart(part:String):void
+		public function partChanged(event:Event):void
 		{
+			var part:String = (selectionPanel.selectedChild as NavigatorContent).id;
 			trace("updated Part to : " + part);
 			selectedPart = part;
 		}
 		
-		public function updateColour(colour:String):void
+		public function updateColour(event:SelectionChangeEvent):void
 		{
-			trace("updated colour to " + colour);
-			selectedColour = colour;
-			updateImages();
-		}
-		
-		public function updateMaterial(material:String):void
-		{
-			trace("updated material to " + material);
-			selectedMaterial = material;
+			trace("updated colour to " + event.colour);
+			selectedColour = event.colour;
 			updateImages();
 		}
 		
 		private function setDefaultValues():void
 		{
 			selectedColour = "brown";
-			selectedMaterial = "suede";
 			selectedPart = "body";
 			collarimg.source = "assets/women/collar/" + pathSuffix();
 			bodyimg.source = "assets/women/body/" + pathSuffix();
@@ -68,7 +60,7 @@
 		
 		private function pathSuffix():String
 		{
-			return selectedMaterial + "/" + selectedColour + ".png";
+			return "leather/" + selectedColour + ".png";
 		}
 		
 		]]>
@@ -76,7 +68,7 @@
 	
 	<s:HGroup horizontalAlign="center" x="20" y="20" height="400" width="700">
 		<jp:SelectionPanel id="selectionPanel" height="150" width="200" 
-			creationComplete="addSelectionPanelCallbacks()" />
+			change="partChanged(event)"/>
 		<mx:Container width="250" height="220">
 			<s:Image id="collarimg" width="250" height="220"/>
 			<s:Image id="bodyimg" width="250" height="220"/>

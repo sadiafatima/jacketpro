@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+               xmlns:s="library://ns.adobe.com/flex/spark" 
+               xmlns:mx="library://ns.adobe.com/flex/halo">
+	
+		<fx:Script>
+		<![CDATA[
+			import bms.jacketpro.event.SelectionChangeEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+		
+			private function handleColour(event:ItemClickEvent):void {
+                
+				var colourValue:String = colourgrp.selection.id;
+				var ev:SelectionChangeEvent = new SelectionChangeEvent(SelectionChangeEvent.COLOUR_CHANGE);
+				ev.colour = colourValue;
+				trace("dispatching colour: " + ev.colour);
+                dispatchEvent(ev);
+		}
+		
+		private function setSelectedOnInit(event:FlexEvent):void
+		{
+			(event.target as RadioButton).selected = true;
+		}
+			   
+		]]>
+	</fx:Script>
+	
+	<fx:Metadata>
+        [Event(name="colourChange", type="bms.jacketpro.event.SelectionChangeEvent")]
+    </fx:Metadata>
+	
+	<fx:Declarations>
+		<s:RadioButtonGroup id="colourgrp" itemClick="handleColour(event);"/>
+	</fx:Declarations>
+	
+	<s:RadioButton group="{colourgrp}" id="brown" label="Brown" width="150" creationComplete="setSelectedOnInit(event)"/>
+	<s:RadioButton group="{colourgrp}" id="blue" label="Blue" width="150"/>
+	<s:RadioButton group="{colourgrp}" id="green" label="Green" width="150"/>
+</s:VGroup>
