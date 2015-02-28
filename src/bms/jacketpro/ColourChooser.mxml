@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
                xmlns:s="library://ns.adobe.com/flex/spark" 
-               xmlns:mx="library://ns.adobe.com/flex/halo">
+               xmlns:mx="library://ns.adobe.com/flex/halo" 
+			   gap="20"
+			   creationComplete="removeIcons(event)">
 	
 		<fx:Script>
 		<![CDATA[
@@ -18,9 +20,13 @@
                 dispatchEvent(ev);
 		}
 		
-		private function setSelectedOnInit(event:FlexEvent):void
+		private function removeIcons(event:FlexEvent):void
 		{
-			(event.target as RadioButton).selected = true;
+			trace("removing icons");
+			brown.selected = true;
+			brown.clearStyle("icon");
+			blue.setStyle("icon", null);
+			green.setStyle("icon", null);
 		}
 			   
 		]]>
@@ -34,7 +40,28 @@
 		<s:RadioButtonGroup id="colourgrp" itemClick="handleColour(event);"/>
 	</fx:Declarations>
 	
-	<s:RadioButton group="{colourgrp}" id="brown" label="Brown" width="150" creationComplete="setSelectedOnInit(event)"/>
-	<s:RadioButton group="{colourgrp}" id="blue" label="Blue" width="150"/>
-	<s:RadioButton group="{colourgrp}" id="green" label="Green" width="150"/>
+	<s:Group>
+	<s:RadioButton group="{colourgrp}" id="brown" height="30" width="50" />
+	<s:Rect height="30" width="50" radiusX="3" radiusY="3" >
+		<s:stroke><s:SolidColorStroke color="0x000000" weight="2"/></s:stroke>
+		<s:fill><s:SolidColor color="#4c1a00" alpha="0.8" /></s:fill>
+	</s:Rect>
+	</s:Group>
+	
+	<s:Group>
+	<s:RadioButton group="{colourgrp}" id="blue" height="30" width="50" />
+	<s:Rect height="30" width="50" radiusX="3" radiusY="3" >
+		<s:stroke><s:SolidColorStroke color="0x000000" weight="2"/></s:stroke>
+		<s:fill><s:SolidColor color="#001655" alpha="0.8" /></s:fill>
+	</s:Rect>
+	</s:Group>
+	
+	<s:Group>
+	<s:RadioButton group="{colourgrp}" id="green" height="30" width="50" />
+	<s:Rect height="30" width="50" radiusX="3" radiusY="3" >
+		<s:stroke><s:SolidColorStroke color="0x000000" weight="2"/></s:stroke>
+		<s:fill><s:SolidColor color="#102000" alpha="0.8" /></s:fill>
+	</s:Rect>
+	</s:Group>
+	
 </s:VGroup>

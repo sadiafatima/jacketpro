@@ -4,12 +4,6 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				xmlns:jp="bms.jacketpro.*">
 				
-	<fx:Script>
-		<![CDATA[
-		
-		]]>
-	</fx:Script>
-				
 	<s:NavigatorContent id="body" label="Body" width="200" height="200">
 		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
 	</s:NavigatorContent>

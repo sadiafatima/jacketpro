@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:mx="library://ns.adobe.com/flex/mx" 
@@ -66,13 +65,25 @@
 		]]>
 	</fx:Script>
 	
-	<s:HGroup horizontalAlign="center" x="20" y="20" height="400" width="700">
-		<jp:SelectionPanel id="selectionPanel" height="150" width="200" 
-			change="partChanged(event)"/>
-		<mx:Container width="250" height="220">
-			<s:Image id="collarimg" width="250" height="220"/>
-			<s:Image id="bodyimg" width="250" height="220"/>
-			<s:Image id="sleevesimg" width="250" height="220"/>
-		</mx:Container>
-	</s:HGroup>
+	<s:Panel x="20" y="20" title="Customize your Jacket">
+		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="20" y="20" gap="50"
+					height="400" width="700">
+			<jp:SelectionPanel id="selectionPanel" height="200" width="160" 
+				change="partChanged(event)" />
+			<mx:Container width="250" height="220">
+				<s:Image id="collarimg" clearOnLoad="false" width="250" height="220"/>
+				<s:Image id="bodyimg" clearOnLoad="false" width="250" height="220"/>
+				<s:Image id="sleevesimg" clearOnLoad="false" width="250" height="220"/>
+			</mx:Container>
+		</s:HGroup>
+	
+		<s:controlBarContent>
+			<s:ToggleButton label="Front View" />   
+			<s:ToggleButton label="Back View" />
+		</s:controlBarContent>        
+
+		<s:controlBarLayout>
+			<s:HorizontalLayout paddingTop="10" paddingBottom="10" horizontalAlign="center"></s:HorizontalLayout>
+		</s:controlBarLayout>
+	</s:Panel>
 </s:Application>
