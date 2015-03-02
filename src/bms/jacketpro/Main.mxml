@@ -1,80 +1,13 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:mx="library://ns.adobe.com/flex/mx" 
-			   xmlns:jp="bms.jacketpro.*"
-			   applicationComplete="addSelectionPanelCallbacks()">
-	
-	<fx:Script>
-		<![CDATA[
-		import bms.jacketpro.event.SelectionChangeEvent
-		import flash.events.Event;
-		import spark.components.NavigatorContent;
-		
-		private var selectedPart:String;
-		private var selectedColour:String;
-		
-		private function addSelectionPanelCallbacks():void
-		{
-			setDefaultValues();
-			selectionPanel.addEventListener(SelectionChangeEvent.COLOUR_CHANGE, updateColour);
-		}
-		
-		public function partChanged(event:Event):void
-		{
-			var part:String = (selectionPanel.selectedChild as NavigatorContent).id;
-			trace("updated Part to : " + part);
-			selectedPart = part;
-		}
-		
-		public function updateColour(event:SelectionChangeEvent):void
-		{
-			trace("updated colour to " + event.colour);
-			selectedColour = event.colour;
-			updateImages();
-		}
-		
-		private function setDefaultValues():void
-		{
-			selectedColour = "brown";
-			selectedPart = "body";
-			collarimg.source = "assets/women/collar/" + pathSuffix();
-			bodyimg.source = "assets/women/body/" + pathSuffix();
-			sleevesimg.source = "assets/women/sleeves/" + pathSuffix();
-		}
-		
-		private function updateImages():void
-		{
-			trace("updating images");
-			if (selectedPart == "collar")
-				collarimg.source = "assets/women/collar/" + pathSuffix();
-			else if (selectedPart == "body")
-				bodyimg.source = "assets/women/body/" + pathSuffix();
-			else if (selectedPart == "sleeves")
-				sleevesimg.source = "assets/women/sleeves/" + pathSuffix();
-				
-			trace("C: " + collarimg.source);
-			trace("B: " + bodyimg.source);
-			trace("S: " + sleevesimg.source);
-		}
-		
-		private function pathSuffix():String
-		{
-			return "leather/" + selectedColour + ".png";
-		}
-		
-		]]>
-	</fx:Script>
+			   xmlns:jp="bms.jacketpro.*">
 	
 	<s:Panel x="20" y="20" title="Customize your Jacket">
 		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="20" y="20" gap="50"
 					height="400" width="700">
-			<jp:SelectionPanel id="selectionPanel" height="200" width="160" 
-				change="partChanged(event)" />
-			<mx:Container width="250" height="220">
-				<s:Image id="collarimg" clearOnLoad="false" width="250" height="220"/>
-				<s:Image id="bodyimg" clearOnLoad="false" width="250" height="220"/>
-				<s:Image id="sleevesimg" clearOnLoad="false" width="250" height="220"/>
-			</mx:Container>
+			<jp:SelectionPanel id="selectionPanel" height="200" width="160"/>
+			<jp:PreviewPanel id="previewPanel" width="250" height="220"/>
 		</s:HGroup>
 	
 		<s:controlBarContent>
