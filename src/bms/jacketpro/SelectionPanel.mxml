@@ -12,25 +12,32 @@
 	<fx:Script>
 		<![CDATA[
 			import bms.jacketpro.event.SelectionChangeEvent;
+			import flash.display.DisplayObject;
+			import spark.components.NavigatorContent;
 			
 			public function dispatchSelectionChangeEvent():void
 			{
-				var part:String = (selectedChild as NavigatorContent).id;
+				var part:String = (selectedChild as NavigatorContent).name;
 				var ev:SelectionChangeEvent = new SelectionChangeEvent(SelectionChangeEvent.PART_CHANGE);
 				ev.part = part;
 				trace("dispatching part: " + ev.part);
                 dispatchEvent(ev);
 			}
+			
+			public function selectPart(childName:String):void
+			{
+				selectedChild = getChildByName(childName) as NavigatorContent;
+			}
 		]]>
 	</fx:Script>
 				
-	<s:NavigatorContent id="body" label="Body" width="200" height="200">
+	<s:NavigatorContent name="body" label="Body" width="200" height="200">
 		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
 	</s:NavigatorContent>
-	<s:NavigatorContent id="collar" label="Collar" width="200" height="200">
+	<s:NavigatorContent name="collar" label="Collar" width="200" height="200">
 		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
 	</s:NavigatorContent>
-	<s:NavigatorContent id="sleeves" label="Sleeves" width="200" height="200">
+	<s:NavigatorContent name="sleeves" label="Sleeves" width="200" height="200">
 		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
 	</s:NavigatorContent>
 </mx:TabNavigator>

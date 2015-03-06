@@ -4,20 +4,41 @@
 			  xmlns:mx="library://ns.adobe.com/flex/halo"
 			  creationComplete="addSelectionPanelCallbacks()">
 			  
+	<fx:Metadata>
+        [Event(name="colourChange", type="bms.jacketpro.event.SelectionChangeEvent")]
+    </fx:Metadata>
+			  
 	<fx:Script>
 		<![CDATA[
 		import bms.jacketpro.event.SelectionChangeEvent
 		import flash.events.Event;
+		import flash.events.MouseEvent;
+		import flash.geom.Point;
+		import mx.events.FlexEvent;
+        import mx.controls.ToolTip;
+        import mx.core.IUIComponent;
+		import mx.managers.ToolTipManager;
 		import spark.components.NavigatorContent;
 		
+        public var myTip:ToolTip;
+
 		private var selectedPart:String;
 		private var selectedColour:String;
 		
 		public function addSelectionPanelCallbacks():void
 		{
 			setDefaultValues();
-			parent.addEventListener(SelectionChangeEvent.COLOUR_CHANGE, updateColour);
+			parent.addEventListener(SelectionChangeEvent.COLOUR_CHANGE, colourChanged);
 			parent.addEventListener(SelectionChangeEvent.PART_CHANGE, partChanged);
+		}
+		
+		public function updateSelectedPart(part:String):void
+		{
+			selectedPart = part;
+			var ev:SelectionChangeEvent = new SelectionChangeEvent(SelectionChangeEvent.PART_CHANGE);
+			ev.part = part;
+			trace("dispatching part change from preview panel: " + ev.part);
+            dispatchEvent(ev);
 		}
 		
 		public function partChanged(event:SelectionChangeEvent):void
@@ -26,7 +47,29 @@
 			selectedPart = event.part;
 		}
 		
-		public function updateColour(event:SelectionChangeEvent):void
+		public function partHovered(part:String, event:MouseEvent):void
+		{
+			trace("got hover over part: " + part);
+			
+            var s:String = part;
+			
+			//var pt:Point = new Point(0,0);
+            //pt = event.currentTarget.contentToGlobal(pt);
+                
+            //myTip = ToolTipManager.createToolTip(s, pt.x + event.currentTarget.width + 10, pt.y, null, IUIComponent(event.currentTarget)) as ToolTip;
+			
+			myTip = ToolTipManager.createToolTip(s, event.stageX, event.stageY, null, IUIComponent(event.currentTarget)) as ToolTip;
+			
+            myTip.setStyle("backgroundColor",0xFFCC00);
+            myTip.width = 50;
+            myTip.height = 20;
+        }
+
+        private function stopHover(event:MouseEvent):void {
+            ToolTipManager.destroyToolTip(myTip);
+        }
+		
+		public function colourChanged(event:SelectionChangeEvent):void
 		{
 			trace("updated colour to " + event.colour);
 			selectedColour = event.colour;
@@ -39,7 +82,8 @@
 			selectedPart = "body";
 			collarimg.source = "assets/women/collar/" + pathSuffix();
 			bodyimg.source = "assets/women/body/" + pathSuffix();
-			sleevesimg.source = "assets/women/sleeves/" + pathSuffix();
+			leftsleeveimg.source = "assets/women/leftsleeve/" + pathSuffix();
+			rightsleeveimg.source = "assets/women/rightsleeve/" + pathSuffix();
 		}
 		
 		private function updateImages():void
@@ -50,22 +94,31 @@
 			else if (selectedPart == "body")
 				bodyimg.source = "assets/women/body/" + pathSuffix();
 			else if (selectedPart == "sleeves")
-				sleevesimg.source = "assets/women/sleeves/" + pathSuffix();
+			{
+				leftsleeveimg.source = "assets/women/leftsleeve/" + pathSuffix();
+				rightsleeveimg.source = "assets/women/rightsleeve/" + pathSuffix();
+			}
 				
 			trace("C: " + collarimg.source);
 			trace("B: " + bodyimg.source);
-			trace("S: " + sleevesimg.source);
+			trace("L: " + leftsleeveimg.source);
+			trace("R: " + rightsleeveimg.source);
 		}
 		
 		private function pathSuffix():String
 		{
-			return "leather/" + selectedColour + ".png";
+			return "front/" + selectedColour + ".png";
 		}
 		
 		]]>
 	</fx:Script>
 
-	<s:Image id="collarimg" clearOnLoad="false" width="250" height="220" />
-	<s:Image id="bodyimg" clearOnLoad="false" width="250" height="220" />
-	<s:Image id="sleevesimg" clearOnLoad="false" width="250" height="220" />
+	<s:Image id="bodyimg" clearOnLoad="false" x="56" y="46" width="143" height="166" 
+				mouseOver="partHovered('body', event);" mouseOut="stopHover(event)" click="updateSelectedPart('body')" />
+	<s:Image id="collarimg" clearOnLoad="false" x="93" y="28" width="69" height="154"
+				mouseOver="partHovered('collar', event);" mouseOut="stopHover(event)" click="updateSelectedPart('collar')"/>
+	<s:Image id="leftsleeveimg" clearOnLoad="false" x="22" y="65" width="46" height="131"
+				mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')" />
+	<s:Image id="rightsleeveimg" clearOnLoad="false" x="181" y="62" width="56" height="134"
+				mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')" />
 </s:Group>

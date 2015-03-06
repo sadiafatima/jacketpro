@@ -1,7 +1,24 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:mx="library://ns.adobe.com/flex/mx" 
-			   xmlns:jp="bms.jacketpro.*">
+			   xmlns:jp="bms.jacketpro.*"
+			   applicationComplete="init();">
+			   
+	<fx:Script>
+		<![CDATA[
+		import bms.jacketpro.event.SelectionChangeEvent;
+		
+		public function init():void
+		{
+			previewPanel.addEventListener(SelectionChangeEvent.PART_CHANGE, previewPanelChangedPart);
+		}
+		
+		private function previewPanelChangedPart(event:SelectionChangeEvent):void
+		{
+			selectionPanel.selectPart(event.part);
+		}
+		]]>
+	</fx:Script>
 	
 	<s:Panel x="20" y="20" title="Customize your Jacket">
 		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="20" y="20" gap="50"
