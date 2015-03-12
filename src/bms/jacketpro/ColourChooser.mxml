@@ -41,27 +41,39 @@
 	</fx:Declarations>
 	
 	<s:Group>
-	<s:RadioButton group="{colourgrp}" id="brown" height="35" width="75" />
-	<s:Rect x="20" y="4" height="30" width="50" radiusX="3" radiusY="3" >
-		<s:stroke><s:SolidColorStroke color="0x000000" weight="2"/></s:stroke>
-		<s:fill><s:SolidColor color="#4c1a00" alpha="0.8" /></s:fill>
-	</s:Rect>
+		<s:RadioButton group="{colourgrp}" id="brown" height="35" width="75" />
+		<s:Rect x="20" y="4" height="30" width="50" radiusX="3" radiusY="3" >
+			<s:fill>
+				<s:LinearGradient>
+					<s:GradientEntry color="#4c1a00" alpha="0.7" />
+					<s:GradientEntry color="#4c1a00" alpha="0.9" />
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
 	</s:Group>
 	
 	<s:Group>
-	<s:RadioButton group="{colourgrp}" id="blue" height="35" width="75" />
-	<s:Rect x="20" y="5" height="30" width="50" radiusX="3" radiusY="3" >
-		<s:stroke><s:SolidColorStroke color="0x000000" weight="2"/></s:stroke>
-		<s:fill><s:SolidColor color="#001655" alpha="0.8" /></s:fill>
-	</s:Rect>
+		<s:RadioButton group="{colourgrp}" id="blue" height="35" width="75" />
+		<s:Rect x="20" y="5" height="30" width="50" radiusX="3" radiusY="3" >
+			<s:fill>
+				<s:LinearGradient>
+					<s:GradientEntry color="#001655" alpha="0.7" />
+					<s:GradientEntry color="#001655" alpha="0.9" />
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
 	</s:Group>
 	
 	<s:Group>
-	<s:RadioButton group="{colourgrp}" id="green" height="35" width="75" />
-	<s:Rect x="20" y="5" height="30" width="50" radiusX="3" radiusY="3" >
-		<s:stroke><s:SolidColorStroke color="0x000000" weight="2"/></s:stroke>
-		<s:fill><s:SolidColor color="#102000" alpha="0.8" /></s:fill>
-	</s:Rect>
+		<s:RadioButton group="{colourgrp}" id="green" height="35" width="75" />
+		<s:Rect x="20" y="5" height="30" width="50" radiusX="3" radiusY="3" >
+			<s:fill>
+				<s:LinearGradient>
+					<s:GradientEntry color="#102000" alpha="0.7" />
+					<s:GradientEntry color="#102000" alpha="0.9" />
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
 	</s:Group>
 	
 </s:VGroup>
