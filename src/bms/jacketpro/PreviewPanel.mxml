@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 			  xmlns:s="library://ns.adobe.com/flex/spark"
 			  xmlns:mx="library://ns.adobe.com/flex/halo"
-			  creationComplete="addSelectionPanelCallbacks()">
+			  creationComplete="init()">
 			  
 	<fx:Metadata>
         [Event(name="colourChange", type="bms.jacketpro.event.SelectionChangeEvent")]
@@ -18,6 +18,7 @@
         import mx.controls.ToolTip;
         import mx.core.IUIComponent;
 		import mx.managers.ToolTipManager;
+		import spark.components.Image;
 		import spark.components.NavigatorContent;
 		
         public var myTip:ToolTip;
@@ -25,7 +26,23 @@
 		private var selectedPart:String;
 		private var selectedColour:String;
 		
-		public function addSelectionPanelCallbacks():void
+		[Embed(source="/../assets/women/body/front/brown.png")] private var img_body_brown:Class;
+		[Embed(source="/../assets/women/body/front/blue.png")] private var img_body_blue:Class;
+		[Embed(source="/../assets/women/body/front/green.png")] private var img_body_green:Class;
+		
+		[Embed(source="/../assets/women/collar/front/brown.png")] private var img_collar_brown:Class;
+		[Embed(source="/../assets/women/collar/front/blue.png")] private var img_collar_blue:Class;
+		[Embed(source="/../assets/women/collar/front/green.png")] private var img_collar_green:Class;
+		
+		[Embed(source="/../assets/women/leftsleeve/front/brown.png")] private var img_left_sleeve_brown:Class;
+		[Embed(source="/../assets/women/leftsleeve/front/blue.png")] private var img_left_sleeve_blue:Class;
+		[Embed(source="/../assets/women/leftsleeve/front/green.png")] private var img_left_sleeve_green:Class;
+		
+		[Embed(source="/../assets/women/rightsleeve/front/brown.png")] private var img_right_sleeve_brown:Class;
+		[Embed(source="/../assets/women/rightsleeve/front/blue.png")] private var img_right_sleeve_blue:Class;
+		[Embed(source="/../assets/women/rightsleeve/front/green.png")] private var img_right_sleeve_green:Class;
+		
+		public function init():void
 		{
 			setDefaultValues();
 			parent.addEventListener(SelectionChangeEvent.COLOUR_CHANGE, colourChanged);
@@ -48,9 +65,7 @@
 		}
 		
 		public function partHovered(part:String, event:MouseEvent):void
-		{
-			trace("got hover over part: " + part);
-			
+		{			
             var s:String = part;
 			
 			//var pt:Point = new Point(0,0);
@@ -80,14 +95,56 @@
 		{
 			selectedColour = "brown";
 			selectedPart = "body";
-			collarimg.source = "assets/women/collar/" + pathSuffix();
-			bodyimg.source = "assets/women/body/" + pathSuffix();
-			leftsleeveimg.source = "assets/women/leftsleeve/" + pathSuffix();
-			rightsleeveimg.source = "assets/women/rightsleeve/" + pathSuffix();
+			bodyImg.source = new img_body_brown();
+			collarImg.source = new img_collar_brown();
+			leftsleeveImg.source = new img_left_sleeve_brown();
+			rightsleeveImg.source = new img_right_sleeve_brown();
+//			collarimg.source = "assets/women/collar/" + pathSuffix();
+//			bodyimg.source = "assets/women/body/" + pathSuffix();
+//			leftsleeveimg.source = "assets/women/leftsleeve/" + pathSuffix();
+//			rightsleeveimg.source = "assets/women/rightsleeve/" + pathSuffix();
 		}
 		
 		private function updateImages():void
 		{
+			if (selectedPart == "collar")
+			{
+				if (selectedColour == "brown") collarImg.source = img_collar_brown;
+				else if (selectedColour == "blue") collarImg.source = img_collar_blue;
+				else collarImg.source = img_collar_green;
+			}
+			else if (selectedPart == "body")
+			{
+				if (selectedColour == "brown") bodyImg.source = img_body_brown;
+				else if (selectedColour == "blue") bodyImg.source = img_body_blue;
+				else bodyImg.source = img_body_green;
+			}
+			else if (selectedPart == "sleeves")
+			{
+				if (selectedColour == "brown") 
+				{
+					leftsleeveImg.source = img_left_sleeve_brown;
+					rightsleeveImg.source = img_right_sleeve_brown;
+				}
+				else if (selectedColour == "blue")
+				{
+					leftsleeveImg.source = img_left_sleeve_blue;
+					rightsleeveImg.source = img_right_sleeve_blue;
+				}
+				else
+				{
+					leftsleeveImg.source = img_left_sleeve_green;
+					rightsleeveImg.source = img_right_sleeve_green;
+				}
+			}
+				
+			trace("C: " + collarImg.source);
+			trace("B: " + bodyImg.source);
+			trace("L: " + leftsleeveImg.source);
+			trace("R: " + rightsleeveImg.source);
+			
+			
+			/*
 			trace("updating images");
 			if (selectedPart == "collar")
 				collarimg.source = "assets/women/collar/" + pathSuffix();
@@ -103,6 +160,7 @@
 			trace("B: " + bodyimg.source);
 			trace("L: " + leftsleeveimg.source);
 			trace("R: " + rightsleeveimg.source);
+			*/
 		}
 		
 		private function pathSuffix():String
@@ -113,12 +171,34 @@
 		]]>
 	</fx:Script>
 
-	<s:Image id="bodyimg" clearOnLoad="false" x="56" y="46" width="143" height="166" 
+	<s:SkinnableContainer id="bodyContainer" x="56" y="46" width="143" height="166" 
+		mouseOver="partHovered('body', event);" mouseOut="stopHover(event)" click="updateSelectedPart('body')" >
+		<s:Image id="bodyImg"/>
+	</s:SkinnableContainer>
+	
+	<s:SkinnableContainer id="collarContainer" x="93" y="28" width="69" height="154"
+		mouseOver="partHovered('collar', event);" mouseOut="stopHover(event)" click="updateSelectedPart('collar')">
+		<s:Image id="collarImg"/>		
+	</s:SkinnableContainer>
+				
+	<s:SkinnableContainer id="leftsleeveContainer" x="22" y="65" width="46" height="131"
+		mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')">		
+		<s:Image id="leftsleeveImg"/>
+	</s:SkinnableContainer>
+	
+	<s:SkinnableContainer id="rightsleeveContainer" x="181" y="62" width="56" height="134"
+		mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')">
+		<s:Image id="rightsleeveImg"/>
+	</s:SkinnableContainer>
+	
+	<!--
+	<s:Image id="bodyimg" clearOnLoad="false" cacheAsBitmap="true" x="56" y="46" width="143" height="166" 
 				mouseOver="partHovered('body', event);" mouseOut="stopHover(event)" click="updateSelectedPart('body')" />
-	<s:Image id="collarimg" clearOnLoad="false" x="93" y="28" width="69" height="154"
+	<s:Image id="collarimg" clearOnLoad="false" cacheAsBitmap="true" x="93" y="24" width="69" height="154"
 				mouseOver="partHovered('collar', event);" mouseOut="stopHover(event)" click="updateSelectedPart('collar')"/>
-	<s:Image id="leftsleeveimg" clearOnLoad="false" x="22" y="65" width="46" height="131"
+	<s:Image id="leftsleeveimg" clearOnLoad="false" cacheAsBitmap="true" x="22" y="65" width="46" height="131"
 				mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')" />
-	<s:Image id="rightsleeveimg" clearOnLoad="false" x="181" y="62" width="56" height="134"
+	<s:Image id="rightsleeveimg" clearOnLoad="false" cacheAsBitmap="true" x="181" y="62" width="56" height="134"
 				mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')" />
+				-->
 </s:Group>
