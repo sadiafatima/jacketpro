@@ -66,23 +66,29 @@
 		
 		public function partHovered(part:String, event:MouseEvent):void
 		{			
-            var s:String = part;
+			myTip = ToolTipManager.createToolTip(part, event.stageX, event.stageY-20, null, IUIComponent(event.currentTarget)) as ToolTip;
 			
-			//var pt:Point = new Point(0,0);
-            //pt = event.currentTarget.contentToGlobal(pt);
-                
-            //myTip = ToolTipManager.createToolTip(s, pt.x + event.currentTarget.width + 10, pt.y, null, IUIComponent(event.currentTarget)) as ToolTip;
-			
-			myTip = ToolTipManager.createToolTip(s, event.stageX, event.stageY, null, IUIComponent(event.currentTarget)) as ToolTip;
-			
-            myTip.setStyle("backgroundColor",0xFFCC00);
-            myTip.width = 50;
-            myTip.height = 20;
+			myTip.setStyle("fontFamily", "Arial");
+            myTip.setStyle("fontSize", 12);
+            myTip.width = (part.length * 6) + 20;
+            myTip.height = 28;
         }
+		
+		private function moveToolTip(part:String, event:MouseEvent):void {
+			if (myTip != null)
+			{
+				stopHover(event);
+				partHovered(part, event);
+			}
+		}
 
         private function stopHover(event:MouseEvent):void {
-            ToolTipManager.destroyToolTip(myTip);
-        }
+            if (myTip != null)
+			{
+				ToolTipManager.destroyToolTip(myTip);
+				myTip = null;
+			}
+		}
 		
 		public function colourChanged(event:SelectionChangeEvent):void
 		{
@@ -95,14 +101,11 @@
 		{
 			selectedColour = "brown";
 			selectedPart = "body";
+ 
 			bodyImg.source = new img_body_brown();
 			collarImg.source = new img_collar_brown();
 			leftsleeveImg.source = new img_left_sleeve_brown();
 			rightsleeveImg.source = new img_right_sleeve_brown();
-//			collarimg.source = "assets/women/collar/" + pathSuffix();
-//			bodyimg.source = "assets/women/body/" + pathSuffix();
-//			leftsleeveimg.source = "assets/women/leftsleeve/" + pathSuffix();
-//			rightsleeveimg.source = "assets/women/rightsleeve/" + pathSuffix();
 		}
 		
 		private function updateImages():void
@@ -142,25 +145,6 @@
 			trace("B: " + bodyImg.source);
 			trace("L: " + leftsleeveImg.source);
 			trace("R: " + rightsleeveImg.source);
-			
-			
-			/*
-			trace("updating images");
-			if (selectedPart == "collar")
-				collarimg.source = "assets/women/collar/" + pathSuffix();
-			else if (selectedPart == "body")
-				bodyimg.source = "assets/women/body/" + pathSuffix();
-			else if (selectedPart == "sleeves")
-			{
-				leftsleeveimg.source = "assets/women/leftsleeve/" + pathSuffix();
-				rightsleeveimg.source = "assets/women/rightsleeve/" + pathSuffix();
-			}
-				
-			trace("C: " + collarimg.source);
-			trace("B: " + bodyimg.source);
-			trace("L: " + leftsleeveimg.source);
-			trace("R: " + rightsleeveimg.source);
-			*/
 		}
 		
 		private function pathSuffix():String
@@ -172,33 +156,23 @@
 	</fx:Script>
 
 	<s:SkinnableContainer id="bodyContainer" x="56" y="46" width="143" height="166" 
-		mouseOver="partHovered('body', event);" mouseOut="stopHover(event)" click="updateSelectedPart('body')" >
-		<s:Image id="bodyImg"/>
+		mouseOver="partHovered('body', event);" mouseOut="stopHover(event)" mouseMove="moveToolTip('body', event)" click="updateSelectedPart('body')" >
+		<s:Image id="bodyImg" clearOnLoad="false" />
 	</s:SkinnableContainer>
 	
 	<s:SkinnableContainer id="collarContainer" x="93" y="28" width="69" height="154"
-		mouseOver="partHovered('collar', event);" mouseOut="stopHover(event)" click="updateSelectedPart('collar')">
-		<s:Image id="collarImg"/>		
+		mouseOver="partHovered('collar', event);" mouseOut="stopHover(event)" mouseMove="moveToolTip('collar', event)" click="updateSelectedPart('collar')">
+		<s:Image id="collarImg" clearOnLoad="false" />		
 	</s:SkinnableContainer>
 				
 	<s:SkinnableContainer id="leftsleeveContainer" x="22" y="65" width="46" height="131"
-		mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')">		
-		<s:Image id="leftsleeveImg"/>
+		mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" mouseMove="moveToolTip('sleeves', event)" click="updateSelectedPart('sleeves')">		
+		<s:Image id="leftsleeveImg" clearOnLoad="false" />
 	</s:SkinnableContainer>
 	
 	<s:SkinnableContainer id="rightsleeveContainer" x="181" y="62" width="56" height="134"
-		mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')">
-		<s:Image id="rightsleeveImg"/>
+		mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" mouseMove="moveToolTip('sleeves', event)" click="updateSelectedPart('sleeves')">
+		<s:Image id="rightsleeveImg" clearOnLoad="false" />
 	</s:SkinnableContainer>
 	
-	<!--
-	<s:Image id="bodyimg" clearOnLoad="false" cacheAsBitmap="true" x="56" y="46" width="143" height="166" 
-				mouseOver="partHovered('body', event);" mouseOut="stopHover(event)" click="updateSelectedPart('body')" />
-	<s:Image id="collarimg" clearOnLoad="false" cacheAsBitmap="true" x="93" y="24" width="69" height="154"
-				mouseOver="partHovered('collar', event);" mouseOut="stopHover(event)" click="updateSelectedPart('collar')"/>
-	<s:Image id="leftsleeveimg" clearOnLoad="false" cacheAsBitmap="true" x="22" y="65" width="46" height="131"
-				mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')" />
-	<s:Image id="rightsleeveimg" clearOnLoad="false" cacheAsBitmap="true" x="181" y="62" width="56" height="134"
-				mouseOver="partHovered('sleeves', event);" mouseOut="stopHover(event)" click="updateSelectedPart('sleeves')" />
-				-->
 </s:Group>
