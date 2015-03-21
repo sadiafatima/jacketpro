@@ -10,26 +10,30 @@
 		
 		public function init():void
 		{
-			previewPanel.addEventListener(SelectionChangeEvent.PART_CHANGE, previewPanelChangedPart);
+			addEventListener(SelectionChangeEvent.PART_CHANGE, previewPanelChangedPart);
 		}
 		
 		private function previewPanelChangedPart(event:SelectionChangeEvent):void
 		{
 			selectionPanel.selectPart(event.part);
 		}
+		
+		private function flip(event:flash.events.MouseEvent):void
+		{
+			previewPanel.viewingAngleChanged();
+		}
 		]]>
 	</fx:Script>
 	
 	<s:Panel x="20" y="20" title="Customize your Jacket">
 		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="20" y="20" gap="50"
-					height="400" width="700">
-			<jp:SelectionPanel id="selectionPanel" height="200" width="160"/>
-			<jp:PreviewPanel id="previewPanel" width="250" height="220"/>
+					height="500" width="800">
+			<jp:SelectionPanel id="selectionPanel" height="200" width="180"/>
+			<jp:PreviewPanel id="previewPanel" width="500" height="500"/>
 		</s:HGroup>
 	
 		<s:controlBarContent>
-			<s:ToggleButton label="Front View" />   
-			<s:ToggleButton label="Back View" />
+			<s:Button label="Flip" click="flip(event)" />   
 		</s:controlBarContent>        
 
 		<s:controlBarLayout>

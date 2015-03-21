@@ -31,13 +31,15 @@
 		]]>
 	</fx:Script>
 				
-	<s:NavigatorContent name="body" label="Body" width="200" height="200">
+	<s:NavigatorContent name="base" label="Base" width="200" height="200">
 		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
 	</s:NavigatorContent>
-	<s:NavigatorContent name="collar" label="Collar" width="200" height="200">
-		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
-	</s:NavigatorContent>
+	
 	<s:NavigatorContent name="sleeves" label="Sleeves" width="200" height="200">
+		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
+	</s:NavigatorContent>
+	
+	<s:NavigatorContent name="border" label="Border" width="200" height="200">
 		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
 	</s:NavigatorContent>
 </mx:TabNavigator>

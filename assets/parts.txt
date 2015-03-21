@@ -1,5 +1,0 @@
-part    x   y    w    h
-collar 93   28   69   144
-body   56   46   143  166
-L slv  22   65   46   131
-R slv  181  62   56   134
