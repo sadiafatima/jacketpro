@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TabNavigator xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				xmlns:jp="bms.jacketpro.*"
-				change="dispatchSelectionChangeEvent()">
+				gap="0" horizontalAlign="left"
+				creationComplete="updateLabel()">
 				
 	<fx:Metadata>
         [Event(name="colourChange", type="bms.jacketpro.event.SelectionChangeEvent")]
     </fx:Metadata>
+	
+	<fx:Style>
+        @namespace s "library://ns.adobe.com/flex/spark";
+        @namespace mx "library://ns.adobe.com/flex/halo";
+ 
+        .toggleButtonBarStyles {
+            skin: ClassReference("bms.jacketpro.skins.JPToggleButtonBarSkin");
+        }
+    </fx:Style>
 				
 	<fx:Script>
 		<![CDATA[
@@ -15,9 +25,16 @@
 			import flash.display.DisplayObject;
 			import spark.components.NavigatorContent;
 			
+			[Bindable]
+            public var tabs:Array = [{label:"", tooltip:"Base"},
+              {label:"", tooltip:"Sleeves"},
+              {label:"", tooltip:"Border"}]; 
+			
 			public function dispatchSelectionChangeEvent():void
 			{
-				var part:String = (selectedChild as NavigatorContent).name;
+				vs.selectedIndex = tabBar.selectedIndex;
+				updateLabel();
+				var part:String = (vs.selectedChild as NavigatorContent).name;
 				var ev:SelectionChangeEvent = new SelectionChangeEvent(SelectionChangeEvent.PART_CHANGE);
 				ev.part = part;
 				trace("dispatching part: " + ev.part);
@@ -26,20 +43,49 @@
 			
 			public function selectPart(childName:String):void
 			{
-				selectedChild = getChildByName(childName) as NavigatorContent;
+				vs.selectedChild = vs.getChildByName(childName) as NavigatorContent;
+				tabBar.selectedIndex = vs.selectedIndex;
+				updateLabel();
+			}
+			
+			private function updateLabel() : void
+			{
+				var txt:String = tabs[tabBar.selectedIndex].tooltip;
+				trace("label should be = " + txt);
+				lblJacketPart.text = txt;
+				
 			}
 		]]>
-	</fx:Script>
-				
-	<s:NavigatorContent name="base" label="Base" width="200" height="200">
-		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
-	</s:NavigatorContent>
+		
+	</fx:Script> 
+
 	
-	<s:NavigatorContent name="sleeves" label="Sleeves" width="200" height="200">
-		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
-	</s:NavigatorContent>
+	<s:Label id="lblJacketPart" text="Hello World" height="30" width="200" fontFamily="_sans"
+		textAlign="center" fontSize="20" />
+	<s:HGroup width="100%" bottom="0" gap="0">
+		<mx:ViewStack id="vs" width="210" height="200">
+			<s:NavigatorContent name="base" label="Base" width="100%" height="100%">
+				<jp:ColourChooser hideWhite="true" height="100%" width="100%"/>
+			</s:NavigatorContent>
 	
-	<s:NavigatorContent name="border" label="Border" width="200" height="200">
-		<jp:ColourChooser height="90%" width="90%" verticalAlign="middle" horizontalAlign="center" />
-	</s:NavigatorContent>
-</mx:TabNavigator>
+			<s:NavigatorContent name="secondary" label="Sleeves" width="100%" height="100%">
+				<jp:ColourChooser hideWhite="true" height="100%" width="100%"/>
+			</s:NavigatorContent>
+	
+			<s:NavigatorContent name="border" label="Border" width="100%" height="100%">
+				<jp:ColourChooser height="100%" width="100%"/>
+			</s:NavigatorContent>
+		</mx:ViewStack>
+	
+	
+	<mx:ToggleButtonBar id="tabBar" width="30" height="90"
+			buttonStyleName="toggleButtonBarStyles"
+            firstButtonStyleName="toggleButtonBarStyles"
+            lastButtonStyleName="toggleButtonBarStyles"
+            horizontalCenter="0" verticalCenter="0"
+			dataProvider="{tabs}" toolTipField="tooltip"
+			itemClick="dispatchSelectionChangeEvent()" direction="vertical">
+	</mx:ToggleButtonBar>
+	</s:HGroup>
+	
+</s:VGroup>

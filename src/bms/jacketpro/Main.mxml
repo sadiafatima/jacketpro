@@ -25,19 +25,12 @@
 		]]>
 	</fx:Script>
 	
-	<s:Panel x="20" y="20" title="Customize your Jacket">
-		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="20" y="20" gap="50"
-					height="500" width="800">
-			<jp:SelectionPanel id="selectionPanel" height="200" width="180"/>
+		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="30" y="20" gap="50"
+					height="500" width="900">
+			<jp:SelectionPanel id="selectionPanel" height="200" width="250"/>
 			<jp:PreviewPanel id="previewPanel" width="500" height="500"/>
-		</s:HGroup>
-	
-		<s:controlBarContent>
 			<s:Button label="Flip" click="flip(event)" />   
-		</s:controlBarContent>        
-
-		<s:controlBarLayout>
-			<s:HorizontalLayout paddingTop="10" paddingBottom="10" horizontalAlign="center"></s:HorizontalLayout>
-		</s:controlBarLayout>
-	</s:Panel>
+		</s:HGroup>
+		
+		
 </s:Application>
