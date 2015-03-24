@@ -144,7 +144,7 @@
 		</s:Group>
 		
 		<s:Group height="30" width="100%">
-		<s:Image click="flip()" source="@Embed('/../assets/Rotate_left_arrow.png')" height="20" width="20" x="125" top="20" />  
+		<s:Image click="flip()" source="@Embed('/../assets/Rotate_left_arrow.png')" height="40" width="40" x="125" top="20" />  
 		</s:Group>
 	</s:VGroup>
 	</s:BorderContainer>
