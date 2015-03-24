@@ -21,7 +21,7 @@ package bms.jacketpro
 		
 		[Embed(source="/../assets/front/border_brown.png")] private var front_border_brown:Class;
 		[Embed(source="/../assets/front/border_blue.png")] private var front_border_blue:Class;
-		[Embed(source = "/../assets/front/border_white.png")] private var front_border_green:Class;
+		[Embed(source = "/../assets/front/border_green.png")] private var front_border_green:Class;
 		[Embed(source = "/../assets/front/border_red.png")] private var front_border_red:Class;
 		[Embed(source = "/../assets/front/border_white.png")] private var front_border_white:Class;
 		[Embed(source = "/../assets/front/border_black.png")] private var front_border_black:Class;

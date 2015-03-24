@@ -11,6 +11,7 @@
 		public function init():void
 		{
 			addEventListener(SelectionChangeEvent.PART_CHANGE, previewPanelChangedPart);
+			addEventListener(SelectionChangeEvent.ANGLE_CHANGE, flip);
 		}
 		
 		private function previewPanelChangedPart(event:SelectionChangeEvent):void
@@ -18,19 +19,26 @@
 			selectionPanel.selectPart(event.part);
 		}
 		
-		private function flip(event:flash.events.MouseEvent):void
+		private function flip(event:SelectionChangeEvent):void
 		{
 			previewPanel.viewingAngleChanged();
 		}
 		]]>
 	</fx:Script>
 	
-		<s:HGroup horizontalAlign="center" verticalAlign="middle" x="30" y="20" gap="50"
-					height="500" width="900">
-			<jp:SelectionPanel id="selectionPanel" height="200" width="250"/>
-			<jp:PreviewPanel id="previewPanel" width="500" height="500"/>
-			<s:Button label="Flip" click="flip(event)" />   
-		</s:HGroup>
+	<s:Rect height="100%" width="100%">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0xcbcbcb" ratio=".1"/>
+				<s:GradientEntry color="0xffffff" ratio=".9"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+		
+	<s:HGroup x="30" y="30" height="100%" width="100%" gap="150">
+		<jp:SelectionPanel id="selectionPanel" height="500" width="300" paddingTop="100" left="10"/>
+		<jp:PreviewPanel id="previewPanel" height="600" width="500"/>
+	</s:HGroup>
 		
 		
 </s:Application>

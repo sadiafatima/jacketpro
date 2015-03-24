@@ -96,7 +96,7 @@
 		public function partHovered(part:String, event:MouseEvent):void
 		{			
 			trace("part hovered " + part);
-			this[part + "Img"].filters = [glow];
+			//this[part + "Img"].filters = [glow];
 			myTip = ToolTipManager.createToolTip(part, event.stageX, event.stageY-20, null, IUIComponent(event.currentTarget)) as ToolTip;
 			
 			myTip.setStyle("fontFamily", "Arial");
@@ -118,8 +118,8 @@
 
         private function stopHover(part:String, event:MouseEvent):void 
 		{
-			if (part != null) 
-				this[part + "Img"].filters = [];
+			//if (part != null) 
+				//this[part + "Img"].filters = [];
 				
             if (myTip != null)
 			{
@@ -145,6 +145,8 @@
 		
 		]]>
 	</fx:Script>
+	
+	<s:Group verticalCenter="0" horizontalCenter="0">
 	
 	<s:Image id="baseImg" clearOnLoad="false" width="472" height="548" fillMode="scale" scaleMode="letterbox" />
 	<s:Image id="secondaryImg" clearOnLoad="false" width="472" height="548" fillMode="scale" scaleMode="letterbox" />
@@ -195,4 +197,5 @@
 		mouseOver="partHovered('border', event);" mouseOut="stopHover('border', event)" 
 		mouseMove="moveToolTip('border', event)" click="updateSelectedPart('border')"/>
 		
+	</s:Group>
 </s:Group>

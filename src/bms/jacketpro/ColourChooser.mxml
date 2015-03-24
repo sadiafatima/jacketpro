@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
                xmlns:s="library://ns.adobe.com/flex/spark" 
                xmlns:mx="library://ns.adobe.com/flex/halo"
-			   backgroundColor="0xbbbbbb"
-				dropShadowVisible="true"
 			   creationComplete="removeIcons(event)">
 	
 		<fx:Script>
@@ -34,10 +32,8 @@
 		
 		private function updateTickPosition():void
 		{
-			
-			tick.x = this[colourgrp.selectedValue].x + 20;
-			tick.y = this[colourgrp.selectedValue].y + 20;
-			trace("updated tick to : " + x + "," + y);
+			tick.x = this[colourgrp.selectedValue].x + tileGroup.left;
+			tick.y = this[colourgrp.selectedValue].y + tileGroup.top;
 		}
 		
 			   
@@ -52,69 +48,67 @@
 		<s:RadioButtonGroup id="colourgrp" itemClick="handleColour(event);"/>
 	</fx:Declarations>
 	
-	<s:TileGroup horizontalGap="10" verticalGap="10" left="20" top="20" 
-			orientation="columns" requestedColumnCount="3">
+	<s:TileGroup id="tileGroup" horizontalGap="10" verticalGap="10" left="50" top="20" orientation="columns" requestedColumnCount="3">
 		
-	<s:Group width="50" height="50" id="brown">
-		<s:RadioButton group="{colourgrp}" x="2" id="first" label="brown" fontSize="2" height="100%" width="100%" />
-		<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
-			<s:fill>
-				<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaRichBrown.jpg')" />
-			</s:fill>
-		</s:Rect>
-	</s:Group>
+		<s:Group width="50" height="50" id="brown">
+			<s:RadioButton group="{colourgrp}" x="2" id="first" label="brown" fontSize="2" height="100%" width="100%" />
+			<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
+				<s:fill>
+					<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaRichBrown.jpg')" />
+				</s:fill>
+			</s:Rect>
+		</s:Group>
+		
+		<s:Group width="50" height="50" id="blue">
+			<s:RadioButton group="{colourgrp}" x="2" label="blue" fontSize="2"  height="100%" width="100%" />
+			<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
+				<s:fill>
+					<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaCobalt.jpg')" />
+				</s:fill>
+			</s:Rect>
+		</s:Group>
 	
-	<s:Group width="50" height="50" id="blue">
-		<s:RadioButton group="{colourgrp}" x="2" label="blue" fontSize="2"  height="100%" width="100%" />
-		<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
-			<s:fill>
-				<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaCobalt.jpg')" />
-			</s:fill>
-		</s:Rect>
-	</s:Group>
-	
-	<s:Group width="50" height="50" id="black">
-		<s:RadioButton group="{colourgrp}" x="2" label="black" fontSize="2" height="100%" width="100%" />
-		<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
-			<s:fill>
-				<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaBlack.jpg')" />
-			</s:fill>
-		</s:Rect>
-	</s:Group>
-	
-	<s:Group width="50" height="50" id="red">
-		<s:RadioButton group="{colourgrp}" x="2" label="red" fontSize="2" height="100%" width="100%" />
-		<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
-			<s:fill>
-				<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaFerrariRed.jpg')" />
-			</s:fill>
-		</s:Rect>
-	</s:Group>
-	
-	<s:Group width="50" height="50" id="green">
-		<s:RadioButton group="{colourgrp}" x="2" label="green" fontSize="2" height="100%" width="100%" />
-		<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
-			<s:fill>
-				<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaAmazon.jpg')" />
-			</s:fill>
-		</s:Rect>
-	</s:Group>
-	
-	<s:Group width="50" height="50" id="white" visible="{!hideWhite}">
-		<s:RadioButton group="{colourgrp}" x="2" label="white" fontSize="2" height="100%" width="100%" toolTip="white" />
-		<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
-			<s:fill>
-				<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaWhite.jpg')" />
-			</s:fill>
-		</s:Rect>
-	</s:Group>
+		<s:Group width="50" height="50" id="black">
+			<s:RadioButton group="{colourgrp}" x="2" label="black" fontSize="2" height="100%" width="100%" />
+			<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
+				<s:fill>
+					<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaBlack.jpg')" />
+				</s:fill>
+			</s:Rect>
+		</s:Group>
+		
+		<s:Group width="50" height="50" id="red">
+			<s:RadioButton group="{colourgrp}" x="2" label="red" fontSize="2" height="100%" width="100%" />
+			<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
+				<s:fill>
+					<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaFerrariRed.jpg')" />
+				</s:fill>
+			</s:Rect>
+		</s:Group>
+		
+		<s:Group width="50" height="50" id="green">
+			<s:RadioButton group="{colourgrp}" x="2" label="green" fontSize="2" height="100%" width="100%" />
+			<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
+				<s:fill>
+					<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaAmazon.jpg')" />
+				</s:fill>
+			</s:Rect>
+		</s:Group>
+		
+		<s:Group width="50" height="50" id="white" visible="{!hideWhite}">
+			<s:RadioButton group="{colourgrp}" x="2" label="white" fontSize="2" height="100%" width="100%"/>
+			<s:Rect height="100%" width="100%" radiusX="3" radiusY="3" >
+				<s:fill>
+					<s:BitmapFill source="@Embed('/../assets/catalog/ValenciaWhite.jpg')" />
+				</s:fill>
+			</s:Rect>
+		</s:Group>
 	
 	</s:TileGroup>
 	
 	<s:Group height="50" width="50" id="tick">
 		<s:BitmapImage horizontalCenter="0" verticalCenter="0"
-			height="50" width="50" source="@Embed('/../assets/catalog/selection_tick.png')" />
+			height="30" width="30" source="@Embed('/../assets/catalog/tick.png')" />
 	</s:Group>
 	
-	
-</s:BorderContainer>
+</s:Group>

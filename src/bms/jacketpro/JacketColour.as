@@ -14,12 +14,13 @@ package bms.jacketpro
 		public static const RED:String = "red";
 		public static const WHITE:String = "white";
 		
-		[Embed(source = '/../assets/catalog/ValenciaBlack.jpg')] public static var black :Class;
-		[Embed(source = '/../assets/catalog/ValenciaCobalt.jpg')] public static var blue:Class;
-		[Embed(source = '/../assets/catalog/ValenciaRichBrown.jpg')] public static var brown:Class;
-		[Embed(source = '/../assets/catalog/ValenciaAmazon.jpg')] public static var green:Class;
-		[Embed(source = '/../assets/catalog/ValenciaFerrariRed.jpg')] public static var red:Class;
-		[Embed(source = '/../assets/catalog/ValenciaWhite.jpg')] public static var white:Class;
+		public static const black :String = "Valencia Black";
+		public static const blue:String = "Valencia Cobalt";
+		public static const brown:String = "Valencia Rich Brown";
+		public static const green:String = "Valencia Amazon";
+		public static const red:String = "Valencia Ferrari Red";
+		public static const white:String = "Valencia White";
+		
 	}
 	
 }

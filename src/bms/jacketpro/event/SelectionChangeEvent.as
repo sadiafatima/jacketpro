@@ -15,6 +15,7 @@ package bms.jacketpro.event
 		
         public static const COLOUR_CHANGE:String = "colourChange";
         public static const PART_CHANGE:String = "partChange";
+		public static const ANGLE_CHANGE:String = "angleChange";
 		
         public var colour:String;
 		public var part:String;
