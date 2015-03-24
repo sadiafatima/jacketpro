@@ -29,8 +29,14 @@
 	<s:Rect height="100%" width="100%">
 		<s:fill>
 			<s:LinearGradient rotation="90">
+				<!-- Light gradient background -->
 				<s:GradientEntry color="0xcbcbcb" ratio=".1"/>
 				<s:GradientEntry color="0xffffff" ratio=".9"/>
+				<!-- Dark gradient background -->
+				<!--
+				<s:GradientEntry color="0x000000" ratio=".3"/>
+				<s:GradientEntry color="0xaaaaaa" ratio=".9"/>
+				-->
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>
